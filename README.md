@@ -8,7 +8,6 @@
 - 📝 **Plan Your Trip** – Create and customize your travel itinerary.
 - 💬 **Connect with Travelers** – Chat and share experiences.
 - 📸 **Photo Gallery** – View and upload travel photos.
-- 🌐 **Multi-language Support** – Supports multiple languages for a global audience.
 
 ## 🛠️ Tech Stack
 - **Frontend:** ejs, CSS, JavaScript
