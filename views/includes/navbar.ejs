@@ -10,10 +10,10 @@
           <a class="nav-link" href="/listings/new">Add New villa </a>
         </div>
         <div class="navbar-nav ms-auto">
-         <% if(!CurrUser){ %>
+         <% if(typeof CurrUser === 'undefined' || !CurrUser){ %>
           <a class="nav-link" aria-current="page" href="/signup"><img src="https://img.icons8.com/?size=48&id=23238&format=png" alt="">Sign up</a>
           <a class="nav-link" href="/login"><img src="https://img.icons8.com/?size=48&id=23238&format=png">Login </a>
-          <% } %>    <% if(CurrUser){ %>
+          <% } %>    <% if(typeof CurrUser !== 'undefined' && CurrUser){ %>
           <a class="nav-link" href="/Logout"><img src="https://img.icons8.com/?size=48&id=23312&format=png">Logout </a>
           <% } %>
         </div>

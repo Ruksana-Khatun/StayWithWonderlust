@@ -48,20 +48,17 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 
-const store= MongoStore.create({
-  mongoUrl:dburl,
-  crypto:{
-    secret: process.env.SECRET|| "fallbackSecret",
-  },
-  touchAfter:24 *3600,
-})
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  touchAfter: 24 * 3600,
+});
 store.on("error",(err)=>{
   console.log("EROR IN MONGOO SESSION IN",err);
   
 })
 const sessionOptions={
   store,
-  secret: process.env.SECRET,
+  secret: secret,
   resave:false,
   saveUninitialized:true,
   cookie:{
@@ -85,9 +82,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
-  res.locals.success=req.flash("success");
-  res.locals.error=req.flash("error");
-  res.locals.CurrUser=req.user;
+  res.locals.success=req.flash("success") || [];
+  res.locals.error=req.flash("error") || [];
+  res.locals.CurrUser=req.user || null;
   next();
 });
 

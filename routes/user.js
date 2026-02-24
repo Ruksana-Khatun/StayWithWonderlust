@@ -8,7 +8,7 @@ router.get("/signup", (req, res) => {
 
 
 router.post("/signup",
-     async (req, res) => {
+     async (req, res, next) => {
   try{
     let { username, email, password } = req.body;
   const newUser = new User({ email, username });
@@ -16,16 +16,14 @@ router.post("/signup",
   console.log(registerdUser);
   req.login(registerdUser,(err)=>{
     if(err){
-      next(err)
+      return next(err);
     }
     req.flash("success","welcom to wonderlust!");
-    res.redirect("/listings")
-    
-  })
+    res.redirect("/listings");
+  });
   }catch(e){
     req.flash("error", e.message);
     res.redirect("/signup");
-
   }
 });
 const savaRedirectUrl = (req, res, next) => {
