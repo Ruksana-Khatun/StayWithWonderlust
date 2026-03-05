@@ -24,7 +24,7 @@ const userRouter=require("./routes/user.js");
 const flash = require('connect-flash');
 const { error } = require('console');
 
-const dburl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const dburl = process.env.ATLASDB_URL
 const secret = process.env.SECRET || "fallbackSecret";
 
 main()
@@ -38,7 +38,7 @@ main()
 async function main() {
   await mongoose.connect(dburl);
 }
-
+console.log("DB URL:", process.env.ATLASDB_URL);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -138,6 +138,12 @@ app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
     req.flash("success","New Review created")
     res.redirect(`/listings/${listing._id}`);
    }));
+   
+// Root route - redirect to main listings page
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
    app.delete("/listings/:id/reviews/:reviewId", async (req, res) => {
      console.log(`Delete request for reviewId: ${req.params.reviewId} in listingId: ${req.params.id}`);
      let { id, reviewId } = req.params;
