@@ -18,10 +18,11 @@ module.exports = function flashMiddleware(req, res, next) {
     }
 
     // Setter: req.flash("success", "Saved!") or req.flash("success", ["a","b"])
-    const msgs = Array.isArray(message) ? message : [message];
-    if (!req.session.flash[type]) req.session.flash[type] = [];
-    req.session.flash[type].push(...msgs.filter((m) => m != null && m !== ""));
-    return req.session.flash[type].length;
+  const msgs = Array.isArray(message) ? message : [message];
+if (!req.session.flash) req.session.flash = {};        // ← ADD THIS LINE
+if (!req.session.flash[type]) req.session.flash[type] = [];
+req.session.flash[type].push(...msgs.filter((m) => m != null && m !== ""));
+return req.session.flash[type].length;
   };
 
   next();
