@@ -156,8 +156,6 @@ height: 30vh !important;
 }
 .row {
    margin: 0 auto;
-   display: flex;
-   flex-wrap: wrap;
 }
 
 /* For tablets (landscape and portrait) */
