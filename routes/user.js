@@ -39,8 +39,9 @@ router.get("/login", (req, res) => {
     passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
     async (req, res) => {
       req.flash("success", "Welcome back to Wonderlust!");
-      let redirectUrl = req.session.redirectUrl || "/listings";  
-      // res.redirect(res.locals.redirectUrl);
+      // Use res.locals.redirectUrl (set before auth); session can be regenerated on login and lose redirectUrl
+      let redirectUrl = res.locals.redirectUrl || req.session.redirectUrl || "/listings";
+      if (req.session.redirectUrl) delete req.session.redirectUrl; // clear so we don't redirect there again
       res.redirect(redirectUrl);
     }
   );
