@@ -13,7 +13,6 @@ router.post("/signup",
     let { username, email, password } = req.body;
   const newUser = new User({ email, username });
   const registerdUser = await User.register(newUser, password);
-  console.log(registerdUser);
   req.login(registerdUser,(err)=>{
     if(err){
       return next(err);
