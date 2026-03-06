@@ -26,6 +26,10 @@ const flashMiddleware = require("./utils/flash.js");
 const dburl = process.env.ATLASDB_URL
 const secret = process.env.SECRET || "fallbackSecret";
 
+// Render/Heroku-style deployments sit behind a proxy. Without this,
+// `req.secure` stays false and secure cookies won't be set.
+app.set("trust proxy", 1);
+
 main()
   .then(() => {
     console.log("connected to DB");
@@ -62,9 +66,10 @@ const sessionOptions={
   saveUninitialized:true,
   cookie:{
     expires:Date.now() + 7 * 24 * 60 * 60 * 1000,
-    max: 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly:true,
     secure: process.env.NODE_ENV === 'production',  
+    sameSite: "lax",
     
 
   },
