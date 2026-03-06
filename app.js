@@ -21,8 +21,7 @@ const session = require("express-session");
 const router = express.Router();
 const listingsRouter=require("./routes/listing.js");
 const userRouter=require("./routes/user.js");
-const flash = require('connect-flash');
-const { error } = require('console');
+const flashMiddleware = require("./utils/flash.js");
 
 const dburl = process.env.ATLASDB_URL
 const secret = process.env.SECRET || "fallbackSecret";
@@ -73,7 +72,7 @@ const sessionOptions={
 };
 
 app.use(session(sessionOptions));
-app.use(flash());
+app.use(flashMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));

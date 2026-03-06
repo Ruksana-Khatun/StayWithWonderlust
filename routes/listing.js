@@ -33,7 +33,6 @@ router.get("/", wrapAsync (async (req, res) => {
 
 //New Route
 router.get("/new", (req, res) => { 
-    console.log(req.user);
   if (!req.isAuthenticated()) {
     req.session.redirectUrl=req.originalUrl;
     req.flash("error", "You must be logged in to create a listing!");
@@ -52,7 +51,6 @@ router.get("/new", (req, res) => {
         req.flash("error", "You must be logged in to create a listing!");
         return res.redirect("/login");
       }
-      upload.single("listing[image]");
       
       const newListing = new Listing(req.body.listing);
       newListing.owner=req.user._id;
